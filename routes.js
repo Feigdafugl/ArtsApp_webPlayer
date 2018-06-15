@@ -34,7 +34,7 @@ class ModalSwitch extends React.Component {
     return (
       <div>
 				<Switch>
-				  <Route path='/:key' component={App}/>
+				  <Route path=':key' component={App}/>
 				</Switch>
         {isModal ? <Route path="/art" component={Modal} /> : null}
       </div>
@@ -47,7 +47,7 @@ export default () => {
 	return (
 		<BrowserRouter>
 			<Switch>
-			  <Route path='/:key' component={App}/>
+        <Route path='/' component={App}/>
 			</Switch>
 		</BrowserRouter>
 	)

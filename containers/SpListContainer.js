@@ -54,7 +54,7 @@ class SpListContainer extends Component {
   };
 
   onClick = (species) => {
-    window.history.pushState("", "", '/art');
+    window.history.pushState("", "", window.location +'art/' + species.latinName);
     // this.props.history.push('/art', { modal: true, art: species, url: this.urlMaker, handleClose: this.handleClose})
     this.setState({ open: true, showSp: species});
   }
@@ -72,35 +72,7 @@ class SpListContainer extends Component {
     this.setState({ open: false });
   };
 
-/*
-  renderDialog = () => {
-    return (
-      <div style ={{ width: window.innerWidth -100, height: window.innerHeight -100}}>
-        <AppBar position="static" >
-          <Toolbar style = {{paddingLeft: 0}}>
-            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="title" color="inherit">{this.state.showSp.latinName}</Typography>
-          </Toolbar>
-        </AppBar>
-        <div style = {styles.split}>
-          <div style = {styles.splitChild}>
-            hei
-          </div>
-          <div style = {styles.splitChild}>
-            <div >
-              <iframe src={this.state.showSp.webPage} title="søk" scrolling="yes" style= {styles.iFrame}>
-                <p>Your browser does not support iframes.</p>
-              </iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
-*/
   render () {
     const { fullScreen } = this.props;
     return (
@@ -112,7 +84,7 @@ class SpListContainer extends Component {
           <SpList onChildClick = {this.onClick}/>
           <ElimList onChildClick = {this.onClick}/>
         </SwipeableViews>
-        <AppBar position="static" color="default" style = {styles.bar}>
+        <AppBar position="static" color={"default"} style = {styles.bar}>
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
@@ -121,8 +93,8 @@ class SpListContainer extends Component {
             fullWidth
             style ={styles.barText}
           >
-            <Tab label={"Arter igjen" + ": " + this.props.spLeft.length} />
-            <Tab label={"Eliminerte arter" + ": " + (this.props.activeKey.content.species.length - this.props.spLeft.length)} />
+            <Tab style = {this.props.small ? {width: '50vw'} : {width: '50%'}} label={<div style= {{fontSize: '1.1em'}}>{"Arter igjen" + ": " + this.props.spLeft.length}</div>} />
+            <Tab style = {this.props.small ? {width: '50vw'} : {width: '50%'}} label={<div style= {{fontSize: '1.1em'}}>{"Eliminerte arter" + ": " + (this.props.activeKey.content.species.length - this.props.spLeft.length)}</div>} />
           </Tabs>
         </AppBar>
         <Dialog
@@ -131,7 +103,6 @@ class SpListContainer extends Component {
           open={this.state.open}
           onClose={this.handleClose}
           TransitionComponent={this.Transition}
-          onBackdropClick = {()=> console.log('close')}
         >
           <Modal handleClose = {this.handleClose} showSp = {this.state.showSp}></Modal>
         </Dialog>
@@ -149,9 +120,14 @@ const styles = {
 	},
 	bar: {
     alignSelf: 'flex-end',
+    backgroundColor: color.footerColor,
     color: color.AAIconBlue,
+    borderTop: '2px',
+    borderColor: 'gray',
+    borderTopStyle: 'solid',
 	},
   barText: {
+    alignSelf: 'center',
     color: color.AAIconBlue,
   },
   icon: {

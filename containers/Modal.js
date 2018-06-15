@@ -8,6 +8,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CloseIcon from '@material-ui/icons/Close';
 import ScrollArea from 'react-scrollbar';
 import SpList from './SpList'
+import ReactTooltip from 'react-tooltip'
 import ElimList from './ElimList'
 import resImg from '../img/ArtsApp_symbol075.png';
 
@@ -31,13 +32,13 @@ class SpListContainer extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
 			value: 0,
       open: true,
       screenWidth: window.innerWidth,
       screenHeight: window.innerHeight,
-      showSp: props.showSp
+      showSp: props.showSp,
+      selImg: props.showSp.images[0],
     };
   };
   componentDidMount() {
@@ -49,7 +50,6 @@ class SpListContainer extends Component {
 	};
 
   updateDimensions = () => {
-    console.log('endrer størrelse');
     this.setState({
       screenWidth: window.innerWidth,
       screenHeight: window.innerHeightn
@@ -81,14 +81,30 @@ class SpListContainer extends Component {
     this.setState({ open: false });
   };
 
+  onImgClick(img){
+    this.setState({
+      selImg: img,
+    });
+  }
+
   renderSpecies = () => {
     return (
       <div style = {Object.assign({width: this.state.screenWidth /2}, styles.splitChild)}>
-        <img src={this.state.showSp.images.length !== 0 ? this.state.showSp.images[0] : resImg} onError={(e)=>{e.target.src=resImg}} alt="resImg" style={{ height: '20em', margin: '1em' }}/>
+        <a  data-tip="React-tooltip" style = {{}} href={this.state.selImg} target="_blank">
+          <img src={this.state.showSp.images.length !== 0 ? this.state.selImg : resImg} onError={(e)=>{e.target.src=resImg}} alt="resImg" style={{ height: '20em', margin: '1em' }}/>
+          <ReactTooltip place="top" type="light" effect="float">
+            <span>Trykk for å åpne i ny fane.</span>
+          </ReactTooltip>
+      </a>
         {this.state.showSp.images.length !== 0 &&
           <div style={styles.images}>
-              {this.state.showSp.images.map(tile => (
-                <img src={this.state.showSp.images[0]} onError={(e)=>{e.target.src=resImg}} alt="resImg" style={styles.img}/>
+              {this.state.showSp.images.map(img => (
+                <Button
+                  key={ img + ''}
+                  onClick = {this.onImgClick.bind(this, img)}
+                  style = {this.state.selImg === img ? {backgroundColor: 'rgba(154, 154, 154, 0.15)',} : {}}>
+                <img src={img} onError={(e)=>{e.target.src=resImg}} alt="resImg" style={styles.img}/>
+                </Button>
               ))}
           </div>
         }
@@ -100,11 +116,11 @@ class SpListContainer extends Component {
 
   renderDialog = () => {
     return (
-      <div style ={{ width: (this.state.showSp.webPage === ''? 'auto' : (window.innerWidth < 800 ? 'auto' : this.state.screenWidth -100)), height: this.state.screenHeight -100}}>
+      <div style ={{ width: (this.state.showSp.webPage === ''? 'auto' : (window.innerWidth < 800 ? 'auto' : this.state.screenWidth -100)), height: this.state.screenHeight -100, fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"]}}>
         <AppBar position="static" >
           <Toolbar style = {{paddingLeft: 0}}>
             <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-              <CloseIcon />
+              <CloseIcon style = {{fontSize: '1.5em'}}/>
             </IconButton>
             <Typography variant="display1" style = {{marginLeft: '2em'}} color="inherit">{this.state.showSp.latinName + '  (' + this.state.showSp.localName + ')'}</Typography>
           </Toolbar>
@@ -132,23 +148,6 @@ class SpListContainer extends Component {
       this.renderDialog()
     )
   }
-
-/*
-  render () {
-    return (
-        <Dialog
-          fullScreen
-          open={this.state.open}
-          onClose={this.handleClose}
-          TransitionComponent={this.Transition}
-          onBackdropClick = {()=> console.log('close')}
-        >
-          {this.renderDialog()}
-        </Dialog>
-    )
-  }
-*/
-
 }
 
 const styles = {
@@ -166,6 +165,7 @@ const styles = {
     color: color.AAIconBlue,
   },
   icon: {
+    fontSize: '1em',
     color: color.AAIconBlue,
   },
   split: {

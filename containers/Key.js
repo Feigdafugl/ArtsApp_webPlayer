@@ -51,7 +51,6 @@ class Key extends Component {
    * @see KeyAction.resetKey
    */
   resetKey = () => {
-    console.log('reset');
     this.props.actions.resetKey();
   }
 
@@ -112,8 +111,8 @@ class Key extends Component {
     var trait = this.props.activeKey.content.trait[key];
     return (
       <div key={key} style={{padding:5}}>
-        <ExpansionPanel>
-          <ExpansionPanelSummary  style = {styles.lEle} expandIcon={<ExpandMoreIcon style = {styles.icon}/>}>
+        <ExpansionPanel  style = {styles.lEle}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon style = {styles.icon}/>}>
             <h4 >{trait.traitText}</h4>
           </ExpansionPanelSummary>
           <ExWrap
@@ -141,11 +140,13 @@ class Key extends Component {
             type='simple'
             />
           </SwipeableViews>
+        <div id = "footer" style = {styles.footer}>
         <Button
           style ={styles.btn}
           variant="raised"
           onClick= {this.resetKey}>
           Reset</Button>
+        </div>
       </div>
     )
   }
@@ -158,16 +159,30 @@ const styles = {
     alignContent: 'center',
     height: '100%'
 	},
+  footer: {
+    backgroundColor: color.footerColor,
+    width: '100%',
+    display: 'flex',
+    borderTop: '2px',
+    borderColor: 'gray',
+    borderTopStyle: 'solid',
+    justifyContent: 'center',
+  },
 	btn: {
-    margin: '10px',
+    margin: '0.5em',
+    fontSize: '1em',
     width: '90%',
+    backgroundColor: color.menuColor,
     alignSelf: 'center',
     color: color.AAIconBlue,
 	},
   lEle: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: color.listEle,
+    marginLeft: '0.3em',
+    marginRight: '0.3em',
   },
   icon: {
+    fontSize: '1.5em',
     color: color.AAIconBlue,
   }
 

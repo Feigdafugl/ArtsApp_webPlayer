@@ -17,6 +17,7 @@ const DEFAULT_STATE = {
   chosenTraits: [],
   spLeft: [],
   keyLoading: false,
+  keyError: false,
   activeKey: {content: {trait: {}, species: {}}},
 };
 
@@ -59,7 +60,6 @@ export default (state = DEFAULT_STATE, action) => {
       chosenTraits: [],
     };
   case `${actionTypes.SET_KEY}_LOADING`:
-  console.log('loading');
     return{...state,
       keyLoading: true,
     };
@@ -74,6 +74,7 @@ export default (state = DEFAULT_STATE, action) => {
     };
   case `${actionTypes.SET_KEY}_ERROR`:
     return{...state,
+      keyError: true,
       keyLoading: false,
     };
   case actionTypes.CLOSE_MENU:

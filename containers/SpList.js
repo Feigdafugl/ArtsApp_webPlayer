@@ -38,8 +38,8 @@ onClick(sp) {
 renderItem(index, key) {
   return (
     <div key={key} style={{padding:5}}>
-      <ExpansionPanel>
-        <ExpansionPanelSummary  style = {styles.lEle} expandIcon={<ExpandMoreIcon style = {styles.icon}/>}>
+      <ExpansionPanel style = {styles.lEle}>
+        <ExpansionPanelSummary   expandIcon={<ExpandMoreIcon style = {styles.icon}/>}>
           <SpElement species = {this.props.spLeft[key]} />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails style= {{flexDirection: 'column'}}>
@@ -61,7 +61,7 @@ renderItem(index, key) {
             variant="raised"
             onClick= {() => this.onClick(sp) }
             >Utfyllende artsbeskrivelse</Button>
-          <p>
+          <p style= {{fontSize: '1em'}}>
             {sp.speciesText}
           </p>
         </div>
@@ -71,7 +71,6 @@ renderItem(index, key) {
 
 
   render () {
-  console.log(this.props);
     return (
       <div style= {styles.container}>
           <ReactList
@@ -99,13 +98,17 @@ const styles = {
   },
 	btn: {
     width: '90%',
+    fontSize: '1em',
     alignSelf: 'center',
     color: color.AAIconBlue,
 	},
   lEle: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: color.listEle,
+    marginLeft: '0.3em',
+    marginRight: '0.3em',
   },
   icon: {
+    fontSize: '1.5em',
     color: color.AAIconBlue,
   }
 

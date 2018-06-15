@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Background from '../img/background.jpg';
 import icon from '../img/ArtsApp_symbol.png'
+import error from '../img/error.png'
 import Key from './Key'
 import * as color from '../lib/colors'
 import SpListContainer from './SpListContainer'
@@ -33,16 +34,16 @@ class App extends Component {
 		this.state = {
 			value: 0,
 			screenSize: window.innerWidth,
-			loading: true
+			phone: screen.width < 900,
+			isLoading: true
 		}
 
 	}
 
 	componentDidMount() {
-		this.setState({isLoading: false})
 		window.addEventListener("resize", this.updateDimensions);
 		if (this.props.chosenValues.length === 0) {
-			this.props.actions.setKey(this.props.match.params.key);
+			this.props.actions.setKey();
 		}
 	};
 
@@ -68,70 +69,154 @@ class App extends Component {
     this.setState({ value: index });
   };
 
+
+renderLarge (){
+	return (
+		<section style={ stylesL.sectionStyle }>
+			<div id = "header" style = {stylesL.header}>
+				<img src={icon} alt="icon" style={stylesL.icon}/>
+				<h1 style = {stylesL.headerText}>ArtsApp</h1>
+			</div>
+			{this.props.keyLoading ?
+				<CircularProgress
+					variant="indeterminate"
+					size={70}
+					value={0}
+					style = {{color: color.AAIconBlue, alignSelf: 'center', position: 'fixed', top: '40vh'}}
+				/> :
+				!this.props.keyError ?
+				<div id = "playerContainer" style={ stylesL.playercontainer}>
+					<div style={ stylesL.player}>
+						<Key />
+					</div>
+					<div style={stylesL.divider} />
+					<div style={ stylesL.player}>
+						<SpListContainer small = {false} history= {this.props.history}/>
+					</div>
+				</div>
+				: this.renderNoKey()
+			}
+		</section>
+	)
+};
+
+renderSmall() {
+	return (
+		<section style={ stylesS.sectionStyle }>
+			<div id = "header" style = {stylesS.header}>
+				<img src={icon} alt="icon" style={stylesS.icon}/>
+				<h1 style = {stylesS.headerText}>ArtsApp</h1>
+			</div>
+			{this.props.keyLoading ?
+				<CircularProgress
+					variant="indeterminate"
+					size={70}
+					value={0}
+					style = {{color: color.AAIconBlue, alignSelf: 'center', position: 'fixed', top: '40vh'}}
+				/> :
+				!this.props.keyError ?
+				<div style={ stylesS.playerSmall}>
+					<AppBar position="static" color="default">
+						<Tabs
+							value={this.state.value}
+							onChange={this.handleChange}
+							indicatorColor="primary"
+							textColor="primary"
+							style = {{alignSelf: 'center'}}
+							fullWidth
+						>
+							<Tab style = {{width: '50vw'}} label={<div style= {{fontSize: '1.5em'}}>Nøkkel</div>}/>
+							<Tab style = {{width: '50vw'}} label={<div style= {{fontSize: '1.5em'}}>Arter igjen</div>} />
+						</Tabs>
+					</AppBar>
+					<SwipeableViews enableMouseEvents
+						index={this.state.value}
+						onChangeIndex={this.handleChangeIndex}
+					>
+						<div style={ stylesS.playerSmall}>
+							<Key />
+						</div>
+						<div style={ stylesS.playerSmall}>
+							<SpListContainer small = {true} history= {this.props.history}/>
+						</div>
+					</SwipeableViews>
+				</div>
+				: this.renderNoKey()
+			}
+		</section>
+	)
+};
+
+renderNoKey() {
+	return (
+		<div
+			style = {stylesL.errorMS}>
+			<img src={error} alt="error" style={{height: 100, marginBottom: 0}}/>
+			<p>
+				Nøkkelen du prøver å åpne finnes ikke, eller noe gikk galt i lastingen av den. <br/>
+				Prøv igjen senere!
+			</p>
+		</div>
+	)
+
+}
+
 /*
 traits ={this.props.activeKey.content.trait}
 splist = {this.props.activeKey.content.species}
  */
     render () {
       return (
-				<section style={ styles.sectionStyle }>
-					<div id = "header" style = {styles.header}>
-						<img src={icon} alt="icon" style={styles.icon}/>
-						<h1 style = {styles.headerText}>ArtsApp</h1>
-					</div>
-					{this.state.isLoading ?
-						<CircularProgress
-							variant="indeterminate"
-							size={50}
-							value={0}
-							style = {{alignSelf: 'center'}}
-						/> :
-						this.state.screenSize < 900 ?
-							<div style={ styles.playerSmall}>
-								<AppBar position="static" color="default" style = {{alignSelf: 'flex-end'}}>
-									<Tabs
-										value={this.state.value}
-										onChange={this.handleChange}
-										indicatorColor="primary"
-										textColor="primary"
-										fullWidth
-									>
-										<Tab label="Nøkkel" />
-										<Tab label="Arter igjen" />
-									</Tabs>
-								</AppBar>
-								<SwipeableViews enableMouseEvents
-									index={this.state.value}
-									onChangeIndex={this.handleChangeIndex}
-								>
-									<div style={ styles.player}>
-										<Key />
-									</div>
-									<div style={ styles.player}>
-										<SpListContainer history= {this.props.history}/>
-									</div>
-								</SwipeableViews>
-							</div>
-
-							:
-						<div id = "playerContainer" style={ styles.playercontainer}>
-							<div style={ styles.player}>
-								<Key />
-							</div>
-							<div style={styles.divider} />
-							<div style={ styles.player}>
-								<SpListContainer history= {this.props.history}/>
-							</div>
-						</div>
-				}
-				</section>
+				this.state.screenSize < 900 || this.state.phone ?
+				this.renderSmall() : this.renderLarge()
       )
   	}
 
 
 }
 
-const styles = {
+const stylesS = {
+	playercontainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignSelf: 'center',
+		justifyContent: 'space-between',
+	},
+	icon: {
+		height: '5em',
+		margin: '1em',
+	},
+	header: {
+		display: 'flex',
+		backgroundColor: color.bacgroundC,
+		height: '10vh',
+		flexDirection: 'row',
+		width: '99vw',
+		alignItems: 'center',
+		justifyContent: 'flex-start'
+	},
+	headerText: {
+		color: color.headerText,
+	},
+	playerSmall: {
+		backgroundColor: color.bacgroundC,
+		width: '99vw',
+		flex: 1,
+		height: '83vh',
+		paddingTop: '0.3em',
+		margin: 'auto',
+	},
+	sectionStyle: {
+		display: 'flex',
+		flexDirection: 'column',
+		width: 'auto',
+		height: '100vh',
+		fontSize: '1.3em',
+		fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"]
+	}
+}
+
+const stylesL = {
 	playercontainer: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -150,18 +235,19 @@ const styles = {
 		justifyContent: 'center'
 	},
 	headerText: {
-		color: '#fffef9',
+		color: color.headerText,
 	},
 	player: {
-		backgroundColor: color.AAIconBrown,
+		backgroundColor: color.bacgroundC,
 		width: '25em',
 		height: '80vh',
 		paddingTop: '0.3em',
 		margin: 'auto',
 	},
 	playerSmall: {
-		backgroundColor: color.AAIconBrown,
-		width: '25em',
+		backgroundColor: color.bacgroundC,
+		width: '80vw',
+		height: '70vh',
 		paddingTop: '0.3em',
 		margin: 'auto',
 	},
@@ -170,6 +256,20 @@ const styles = {
 		width: '2em',
 		marginLeft: 'auto',
 		marginRight: 'auto',
+	},
+	errorMS: {
+		color: color.AAIconBlue,
+		alignSelf: 'center',
+		padding: '1em',
+		margin: '1em',
+		position: 'fixed',
+		top: '30vh',
+		width: 'auto',
+		textAlign: 'center',
+		backgroundColor: 'rgb(244, 244, 244)',
+		borderStyle: 'groove',
+		borderWidth: 1,
+		borderColor: '#9a9a9a',
 	},
 	sectionStyle: {
 		display: 'flex',

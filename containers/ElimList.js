@@ -32,14 +32,6 @@ class SpList extends Component {
   };
 
   componentWillReceiveProps (nextProps) {
-/*
-    if (!this.arraysIdentical(nextProps.spLeft, this.props.spLeft )) {
-      this.setState({
-        spElim: this.setElimList(),
-      });
-      console.log('de er ikke lik');
-    };
-*/
     };
 
   componentDidUpdate(prevProps, prevState) {
@@ -83,8 +75,8 @@ class SpList extends Component {
 renderItem(index, key) {
   return (
     <div key={key} style={{padding:5}}>
-      <ExpansionPanel>
-        <ExpansionPanelSummary  style = {{backgroundColor: '#cccccc'}} expandIcon={<ExpandMoreIcon />}>
+      <ExpansionPanel style = {styles.lEle}>
+        <ExpansionPanelSummary  expandIcon={<ExpandMoreIcon style = {styles.icon}/>} >
           <SpElement species = {this.state.spElim[key]} />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails style= {{flexDirection: 'column'}}>
@@ -148,9 +140,12 @@ const styles = {
     color: color.AAIconBlue,
 	},
   lEle: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: color.listEle,
+    marginLeft: '0.3em',
+    marginRight: '0.3em',
   },
   icon: {
+    fontSize: '1.5em',
     color: color.AAIconBlue,
   }
 
