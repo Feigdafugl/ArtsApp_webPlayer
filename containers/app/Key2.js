@@ -8,9 +8,6 @@
 
 import React, { Component } from 'react';
 
-//import TraitWrapper from '../components/exList/TraitWrapper';
-// import key from '../lib/key';
-
 
 
 // redux
@@ -73,7 +70,6 @@ class Key extends Component {
     this.setState({
       alertShown: false,
     });
-    // this.props.actions.resetKey(this.props.chosenKey);  // changeValues([],[]); // kan byttes
   }
 
 

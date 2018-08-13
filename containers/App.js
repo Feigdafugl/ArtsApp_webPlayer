@@ -1,3 +1,10 @@
+/**
+ * @file App.js
+ * @author Kjetil Fossheim
+ *
+ * Set up for the key and tab view for species list(elimList and  splist ) components. Renders the view according screen size. renders a noKey screen if key is not available.
+ */
+
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Background from '../img/background.jpg';
@@ -9,7 +16,6 @@ import SpListContainer from './SpListContainer'
 import SwipeableViews from 'react-swipeable-views';
 import {Typography, AppBar, CircularProgress, Tabs, Tab, Icon, BottomNavigation, BottomNavigationAction} from '@material-ui/core';
 
-import key from '../lib/key';
 
 // redux
 import {connect} from 'react-redux';

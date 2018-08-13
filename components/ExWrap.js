@@ -1,3 +1,11 @@
+/**
+ * @file EsWrap.js
+ * @author Kjetil Fossheim
+ *
+ * Wraps a set of value views in a wrapper that controls click and value states.
+ */
+
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Button,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,Typography,  Icon, BottomNavigation, BottomNavigationAction} from '@material-ui/core';
@@ -20,6 +28,11 @@ function mapDispatchToProps(dispatch) {
 
 class EsWrap extends Component {
 
+
+    /**
+     * state:
+     * selected = selected value, no value selected = -1
+     */
   constructor(props) {
     super(props);
     this.state = {

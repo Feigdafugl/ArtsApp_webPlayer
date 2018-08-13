@@ -5,7 +5,6 @@
  */
 
 import * as actionTypes from '../actions/actionTypes';
-import key from '../lib/key';
 import strings from '../lib/LangStrings';
 // Reducer
 const DEFAULT_STATE = {
@@ -82,7 +81,6 @@ export default (state = DEFAULT_STATE, action) => {
       menuOpen: false,
     };
   case actionTypes.CHANGE_VALUE:
-      // spObject = setSPleftList(actions.newValuelist, state.activeKey.content.species);
     return {...state,
       chosenValues: action.newValuelist,
       chosenTraits: action.newTraitList,

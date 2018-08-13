@@ -1,3 +1,10 @@
+
+/**
+* @file routes.js
+* @author Kjetil Fossheim
+ * router for the app. makes a routerSwitch.
+ */
+
 import React from 'react';
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import App from './containers/App';

@@ -1,3 +1,12 @@
+
+/**
+ * @file Key.js
+ * @author Kjetil Fossheim
+ *
+ * modal showing more filling information about a species.
+ */
+
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Iframe from 'react-iframe';
@@ -76,7 +85,6 @@ class SpListContainer extends Component {
   };
 
   handleClosModal = () => {
-    // this.props.handleClose();
     this.props.history.goBack();
     this.setState({ open: false });
   };

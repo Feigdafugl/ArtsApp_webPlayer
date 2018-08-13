@@ -1,3 +1,10 @@
+
+/**
+* @file index.js
+* @author Kjetil Fossheim
+ * Entry point for the app. Sets the router up with redux store.
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

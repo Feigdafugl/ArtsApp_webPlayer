@@ -1,4 +1,10 @@
-import keyTemp from '../lib/key';
+
+/**
+* @file api.js
+* @author Kjetil Fossheim
+ * Conects to the webAPI and downloads a JOSNof the key the app is going to use.
+ * It also parses the key to get it to the right formate for the app.
+ */
 
 const request = require('superagent');
 const API = 'https://artsapp.uib.no/api/v2/keys/get/'
@@ -14,7 +20,6 @@ return new Promise((resolve, reject) => {
       })
     })
     .catch(error => {
-      console.log('error', error);
       reject();
     //Do something with the error
     });

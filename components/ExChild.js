@@ -1,3 +1,11 @@
+
+/**
+ * @file ExChild.js
+ * @author Kjetil Fossheim
+ *
+ * Value component displaying a value. it also controls the different states of the value component.
+ */
+
 import React, {PropTypes} from 'react';
 import {Divider, Button} from '@material-ui/core';
 import resImg from '../img/ArtsApp_symbol075.png';

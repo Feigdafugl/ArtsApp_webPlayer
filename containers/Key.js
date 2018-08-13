@@ -1,3 +1,11 @@
+/**
+ * @file Key.js
+ * @author Kjetil Fossheim
+ *
+ * In this screen the identification process in the app happens. It makes and maintains the list of choices the user can take.
+ * Ads and removes choices no longer viable.
+ */
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as color from '../lib/colors'
@@ -8,8 +16,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ReactList from 'react-list';
 import ExWrap from '../components/ExWrap'
 
-
-import key from '../lib/key';
 
 // redux
 import {connect} from 'react-redux';

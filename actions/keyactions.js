@@ -1,3 +1,9 @@
+ /**
+  * @file keyactions.js
+  * @author Kjetil Fosssheim
+  *
+  * redux actions for key logic
+  */
 
 import * as actionTypes from './actionTypes';
 import * as api from '../config/api';

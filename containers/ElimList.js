@@ -1,3 +1,10 @@
+/**
+ * @file ElimList.js
+ * @author Kjetil Fossheim
+ *
+ * Screen displaying the list of species eliminated after selection of trait values. Is similar to SpList.js.
+ */
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as color from '../lib/colors'

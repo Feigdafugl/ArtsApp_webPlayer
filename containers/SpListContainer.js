@@ -1,3 +1,11 @@
+/**
+ * @file SpListContainer.js
+ * @author Kjetil Fossheim
+ *
+ * A tab wrapper for the species list(elimList and  splist ) components.
+ */
+
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Iframe from 'react-iframe';
@@ -55,7 +63,6 @@ class SpListContainer extends Component {
 
   onClick = (species) => {
     window.history.pushState("", "", window.location +'art/' + species.latinName);
-    // this.props.history.push('/art', { modal: true, art: species, url: this.urlMaker, handleClose: this.handleClose})
     this.setState({ open: true, showSp: species});
   }
 

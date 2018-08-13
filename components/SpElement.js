@@ -1,3 +1,10 @@
+/**
+ * @file SpElement.js
+ * @author Kjetil Fossheim
+ *
+ * List element for species in the species lists in SpList.js
+ */
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {} from '@material-ui/core';
