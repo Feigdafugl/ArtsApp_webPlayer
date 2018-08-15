@@ -48,6 +48,7 @@ class EsWrap extends Component {
    * @return {void}
    */
    componentWillReceiveProps(nextProps) {
+       console.log(nextProps);
     if (!this.arraysIdentical(nextProps.activeValues, this.props.activeValues)) {
       this.setState({
         disable: this.disableTrait(nextProps.activeValues),
@@ -58,6 +59,24 @@ class EsWrap extends Component {
         selected: -1,
       });
     }
+  }
+
+  /**
+   * in use but has no meaning to the app, to be removed
+   * @return {bool} true = disable false = not disable
+   */
+  disableTrait = (activeValues) => {
+    let n = 0;
+    for (let i = 0; i < this.props.trait.values.length; i++) {
+      if (!activeValues.includes(this.props.trait.values[i].valueId)) {
+        n = n + 1;
+      }
+    }
+    if(n === this.props.trait.values.length) {
+        console.log(true);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -103,22 +122,7 @@ class EsWrap extends Component {
     this.props.onChildClick(id, this.state.selected, trigger, this.state.groupId);
   }
 
-  /**
-   * in use but has no meaning to the app, to be removed
-   * @return {bool} true = disable false = not disable
-   */
-  disableTrait = (activeValues) => {
-    let n = 0;
-    for (let i = 0; i < this.props.trait.values.length; i++) {
-      if (!activeValues.includes(this.props.trait.values[i].valueId)) {
-        n = n + 1;
-      }
-    }
-    if(n === this.props.trait.values.length) {
-      return true;
-    }
-    return false;
-  }
+
 
   renderCilds () {
     return this.props.trait.values.map((item) => {

@@ -14,6 +14,7 @@ const DEFAULT_STATE = {
   chosenValues: [],
   activeValues: [-1],
   chosenTraits: [],
+  disabledTraits: [],
   spLeft: [],
   keyLoading: false,
   keyError: false,
@@ -45,6 +46,23 @@ function setActiveVal(spList) {
   return Array.from(new Set(tempL));
 }
 
+/**
+ * in use but has no meaning to the app, to be removed
+ * @return {bool} true = disable false = not disable
+ */
+function disableTrait (activeValues, traitValues) {
+  let n = 0;
+  for (let i = 0; i < traitValues.length; i++) {
+    if (!activeValues.includes(traitValues[i].valueId)) {
+      n = n + 1;
+    }
+  }
+  if(n === traitValues.length) {
+    return true;
+  }
+  return false;
+}
+
 
 /*
 #########################
@@ -57,6 +75,7 @@ export default (state = DEFAULT_STATE, action) => {
       activeValues: setActiveVal(state.activeKey.content.species),
       chosenValues: [],
       chosenTraits: [],
+      disabledTraits: [],
     };
   case `${actionTypes.SET_KEY}_LOADING`:
     return{...state,
@@ -81,11 +100,18 @@ export default (state = DEFAULT_STATE, action) => {
       menuOpen: false,
     };
   case actionTypes.CHANGE_VALUE:
+  var temptraits = [];
+    if (action.spLeft.length !== 0) {
+        temptraits = state.activeKey.content.trait.filter((e, i)=>{
+            return disableTrait(action.activeValues, state.activeKey.content.trait[i].values)
+        })
+    }
     return {...state,
       chosenValues: action.newValuelist,
       chosenTraits: action.newTraitList,
       spLeft: action.spLeft,
       activeValues: action.activeValues,
+      disabledTraits: temptraits.map((i)=> i.traitId),
     };
   default:
     return state;

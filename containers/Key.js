@@ -111,10 +111,47 @@ class Key extends Component {
     return Array.from(new Set(tempL));
   }
 
-
+  /**
+   * Test if trait have any species associated with it.
+   * This is to make it so the trait only shows in the list if all or parts of the traits species list is left in species selection.
+   * @param {array} speciesToTrait array of species for the tested trait.
+   * @return {bool} false == if the speciesLeft array contains a species that is not in the traits species list. true == if speciesLeft only contains all or less of speciesToTrait.
+   */
+  testTrait(speciesToTrait) {
+    for (let i = 0; i < this.props.spLeft.length; i++) {
+      if (!speciesToTrait.includes(this.props.spLeft[i].species_id)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   renderItem(index, key) {
     var trait = this.props.activeKey.content.trait[key];
+    if (this.props.disabledTraits.includes(trait.traitId)) {
+        return (
+            <div key={key} ></div>
+        )
+    }else if (trait.traitSpecies.length !== 0 ) {
+        if (this.testTrait(trait.traitSpecies) && this.props.spLeft.length !== 0) {
+          return <div key={key} ></div>;
+        }else {
+            return (
+                <div key={key} style={{padding:5}}>
+                  <ExpansionPanel  style = {styles.lEle}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon style = {styles.icon}/>}>
+                      <h4 >{trait.traitText}</h4>
+                    </ExpansionPanelSummary>
+                    <ExWrap
+                      key= {trait.traitId}
+                      trait= {trait}
+                      onChildClick = {this.onValueChange}
+                      noView = {false}/>
+                  </ExpansionPanel>
+                </div>
+            )
+        }
+    }
     return (
       <div key={key} style={{padding:5}}>
         <ExpansionPanel  style = {styles.lEle}>
